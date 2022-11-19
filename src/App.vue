@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
   </div>
 </template>
 
@@ -10,9 +9,6 @@ import { mapActions } from "vuex";
 export default {
   name: "App",
   components: {},
-  mounted() {
-    this.fetchMovies();
-  },
   methods: {
     ...mapActions("movies", ["fetchMovies"]),
   },
