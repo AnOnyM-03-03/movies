@@ -19,6 +19,7 @@ const moviesStore = {
     movies: {},
   },
   getters: {
+    moviesList: ({ movies }) => movies,
     slicedIDs:
       ({ top250IDs }) =>
       (from, to) =>
