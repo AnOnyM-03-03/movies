@@ -2,7 +2,7 @@
   <div class="movie-item mb-3">
     <div class="movie-item__poster" :style="posterBackground"></div>
     <div class="movie-info__wrap d-flex flex-column justify-content-between">
-      <div class="movie-item__info">
+      <div class="movie-item__info text-center mt-5">
         <h3 class="movie-title">{{ movie.Title }}</h3>
         <span class="movie-year">{{ movie.Year }}</span>
       </div>
@@ -71,21 +71,15 @@ export default {
 
 .movie-info__wrap
   padding: 20px 10px
-  padding: 10px
   height: 100%
   opacity: 0
   transition: all .2s ease
-
-
 .movie-title
   font-size: 18px
   color: #fff
-
 .movie-year
   font-size: 14px
   color: #fff
-
-
 .btn
   width: 100%
 </style>
