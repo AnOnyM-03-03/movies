@@ -7,6 +7,7 @@
           <MovieItem
             :movie="movie"
             @mouseover.native="onMouseOver(movie.Poster)"
+            @removeItem="onRemoveItem"
           />
         </BCol>
       </template>
@@ -19,6 +20,7 @@
 
 <script>
 import MovieItem from "./MovieItem";
+import { mapActions } from "vuex";
 export default {
   components: {
     MovieItem,
@@ -37,8 +39,17 @@ export default {
     },
   },
   methods: {
+    ...mapActions("movies", ["removeMovie"]),
     onMouseOver(poster) {
       this.$emit("changePoster", poster);
+    },
+    async onRemoveItem({ id, title }) {
+      const isConfirmed = await this.$bvModal.msgBoxConfirm(
+        `Are you sure delete ${title}?`
+      );
+      if (isConfirmed) {
+        this.removeMovie(id);
+      }
     },
   },
 };
