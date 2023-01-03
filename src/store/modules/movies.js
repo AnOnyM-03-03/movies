@@ -77,6 +77,16 @@ const moviesStore = {
       if (index !== -1) {
         commit(REMOVE_MOVIE, index);
         dispatch("fetchMovies");
+        dispatch(
+          "showNotify",
+          {
+            message: "Movie deleted successful",
+            title: "success",
+            variant: "success",
+            solid: true,
+          },
+          { root: true }
+        );
       }
     },
     async searchMovie({ commit, dispatch }, query) {
@@ -88,9 +98,17 @@ const moviesStore = {
         }
         const movies = serializeResponse(response.Search);
         commit(MOVIES, movies);
-        console.log(response);
       } catch (error) {
-        console.log(error);
+        dispatch(
+          "showNotify",
+          {
+            message: error.message,
+            title: "Error",
+            variant: "danger",
+            solid: true,
+          },
+          { root: true }
+        );
       } finally {
         dispatch("toggleLoader", false, { root: true });
       }
