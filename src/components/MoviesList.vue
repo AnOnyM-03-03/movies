@@ -8,6 +8,7 @@
             :movie="movie"
             @mouseover.native="onMouseOver(movie.Poster)"
             @removeItem="onRemoveItem"
+            @showModal="onShowMovieInfo"
           />
         </BCol>
       </template>
@@ -15,15 +16,26 @@
         <div>Empty List</div>
       </template>
     </BRow>
+    <BModal
+      body-class="movie-modal_body"
+      :id="movieModalIDs"
+      size="xl"
+      hide-footer
+      hide-header
+    >
+      <MovieModalContent :movie="selectedMovie" />
+    </BModal>
   </BContainer>
 </template>
 
 <script>
 import MovieItem from "./MovieItem";
+import MovieModalContent from "./MovieModalContent";
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     MovieItem,
+    MovieModalContent,
   },
   name: "MoviesList",
   props: {
@@ -32,6 +44,10 @@ export default {
       default: () => ({}),
     },
   },
+  data: () => ({
+    movieModalIDs: "movie-info",
+    selectedMovieId: "",
+  }),
 
   computed: {
     isExist() {
@@ -40,6 +56,9 @@ export default {
     ...mapGetters("movies", ["isSearch"]),
     listTitle() {
       return this.isSearch ? `Search result` : "IMDB Top 250";
+    },
+    selectedMovie() {
+      return this.selectedMovieId ? this.list[this.selectedMovieId] : null;
     },
   },
   methods: {
@@ -55,6 +74,10 @@ export default {
         this.removeMovie(id);
       }
     },
+    onShowMovieInfo(id) {
+      this.selectedMovieId = id;
+      this.$bvModal.show(this.movieModalIDs);
+    },
   },
 };
 </script>
@@ -64,5 +87,11 @@ export default {
   font-size: 50px;
   margin-bottom: 30px;
   color: #fff;
+}
+</style>
+
+<style>
+.movie-modal_body {
+  padding: 0 !important;
 }
 </style>
